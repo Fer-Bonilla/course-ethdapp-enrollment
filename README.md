@@ -1,4 +1,4 @@
-# solidity-porject
+# solidity-project
 
 # Project description
 
