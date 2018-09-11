@@ -1,7 +1,21 @@
 pragma solidity ^0.4.23;
 
+/** @title contract certifier. */
 contract Certifier {
     struct Course {
+     
+      /** @dev Create the struct for the course
+      * @param name name od the course.
+      * @param max_students. Limit f the course students.
+      * @param start. class start date
+      * @param end. class end date
+      * @param duration. Course duratioin in days
+      * @param threshold. Limit date for ending all the academic task     
+      * @param session_codes. Sessiones list for the course for control the assistance.
+      * @param cost. Course cost 
+      * @param students is a mapping type with the students adrresses
+      */        
+        
         string name;
         uint8 max_students;
         uint start;
@@ -14,6 +28,17 @@ contract Certifier {
     }
 
     struct Student {
+        
+      /** @dev Create the struct for students
+      * @param id Personal Id students number
+      * @param fname. Student first name.
+      * @param lname. Student last name.
+      * @param email. Student email addres.
+      * @param session_codes. Student sessions attedance clase register
+      * @param isCertified. Control if the student was certified by the certifier certifierAccount   
+
+      */           
+        
         string id;
         string fname;
         string lname;
@@ -22,18 +47,29 @@ contract Certifier {
         bool isCertified;
     }
 
+    
+    /** @title certifierAccount is the address of the oficial certifier */
     address public certifierAccount;
     mapping(bytes32 => Course) courses;
 
+    
+   
+   /** @title contract constructor validate that only the certifider account can create courses */
     constructor () public {
         certifierAccount = msg.sender;
     }
 
+   
+   /** @title  validate that only the certifider account can create courses */   
     modifier onlyCertifier () {
         require(msg.sender == certifierAccount);
         _;
     }
 
+   /** @dev Add new course to the contract
+      * @param Receive a course struct
+      */    
+    
     function addCourse(
         string _name,
         bytes32 _code,
@@ -56,6 +92,11 @@ contract Certifier {
             });
     }
 
+     
+      /** @dev Let a student subscribe to a course paying the enrollment fee
+      * @param Receive a course struct
+      */     
+    
     function subscribe(
         bytes32 _code,
         string _fname,
